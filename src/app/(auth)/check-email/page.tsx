@@ -1,0 +1,2 @@
+import Link from 'next/link';import { MailCheck } from 'lucide-react';import { Feedback } from '@/components/feedback';
+export default function CheckEmail(){return <section className="auth-card text-center"><MailCheck size={40} className="text-blue-600 mx-auto mb-4"/><h1 className="h1 mb-3">Check your email</h1><Feedback/><p className="muted text-sm">Click the verification link we sent to activate your account. Check spam if you don’t see it.</p><Link href="/login" className="btn btn-primary mt-6">Go to sign in</Link></section>}

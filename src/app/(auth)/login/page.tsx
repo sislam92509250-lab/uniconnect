@@ -1,0 +1,5 @@
+import Link from 'next/link';
+import { login } from '@/app/actions';
+import { Feedback } from '@/components/feedback';
+export default function Login() { return <section className="auth-card"><div className="eyebrow mb-2">Welcome back</div><h1 className="h1 mb-2">Sign in to UniConnect</h1><p className="muted text-sm mb-7">Your university network is one login away.</p><Feedback/>
+<form action={login}><label>Email address<input className="field" type="email" name="email" required autoComplete="email" placeholder="you@university.edu"/></label><label>Password<input className="field" type="password" name="password" required autoComplete="current-password" placeholder="Your password"/></label><div className="flex justify-end mb-5"><Link className="text-xs text-blue-600 font-semibold" href="/forgot-password">Forgot password?</Link></div><button className="btn btn-primary w-full" type="submit">Sign in</button></form><div className="text-sm text-center mt-6 muted">New here? <Link href="/register" className="text-blue-600 font-bold">Create an account</Link></div></section>; }

@@ -1,0 +1,2 @@
+import { resetPassword } from '@/app/actions';import { Feedback } from '@/components/feedback';
+export default function Reset(){return <section className="auth-card"><h1 className="h1 mb-5">Choose a new password</h1><Feedback/><form action={resetPassword}><label>New password<input className="field" name="password" type="password" minLength={8} required/></label><label>Confirm new password<input className="field" name="confirm" type="password" minLength={8} required/></label><button className="btn btn-primary w-full">Update password</button></form></section>}

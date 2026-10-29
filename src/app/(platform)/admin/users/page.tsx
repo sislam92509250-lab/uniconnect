@@ -1,0 +1,8 @@
+import {requireAdmin} from '@/lib/auth';import {Heading,Avatar,Empty} from '@/components/ui';import {adminSetSuspension} from '@/app/actions';
+export default async function AdminUsers({searchParams}:{searchParams:Promise<{q?:string}>}){
+ const {supabase,user}=await requireAdmin();const {q}=await searchParams;
+ let query=supabase.from('profiles').select('id,full_name,username,category,affiliation_status,is_suspended,created_at').order('created_at',{ascending:false}).limit(60);
+ if(q) query=query.ilike('full_name',`%${q.slice(0,70).replace(/[%_]/g,'')}%`);
+ const {data:users}=await query;
+ return <><Heading title="Member management" subtitle="Access control and suspension are enforced on the database side."/><form method="get" className="panel mb-4 flex gap-2"><input className="field" name="q" placeholder="Find a member by name" defaultValue={q||''}/><button className="btn btn-primary">Search</button></form><div className="panel">{users?.length?users.map(u=><div key={u.id} className="list-row"><Avatar name={u.full_name}/><div className="flex-1"><div className="text-sm font-bold">{u.full_name}</div><div className="tiny muted">@{u.username} · {u.category} · {u.affiliation_status}</div></div>{u.id===user.id?<span className="pill">You</span>:<form action={adminSetSuspension}><input name="user_id" type="hidden" value={u.id}/><input name="suspended" type="hidden" value={u.is_suspended?'false':'true'}/><button className={`btn btn-small ${u.is_suspended?'btn-secondary':'btn-danger'}`}>{u.is_suspended?'Reactivate':'Suspend'}</button></form>}</div>):<Empty title="No members found"/>}</div></>;
+}
